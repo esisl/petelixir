@@ -1,18 +1,86 @@
-# Petelixir
+# Petelixir — мониторинг IoT-устройств
 
-To start your Phoenix server:
+Демо понимания разделения ролей в веб-разработке (backend, frontend, mobile) и выбора типа хранилища данных (реляционное vs. NoSQL) в зависимости от решаемой задачи.
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+| Компонент | Технология | Почему именно это |
+|-----------|------------|-------------------|
+| Backend | Elixir / Phoenix 1.7 | OTP-модель подходит для обработки множества одновременных подключений от устройств. Легковесные процессы позволяют держать состояние каждого устройства в памяти. |
+| Frontend | Phoenix LiveView | Интерактивный UI без отдельного JS-фреймворка |
+| Mobile | Kotlin / Android | Нативный стек. Приложение изолировано от БД и общается с сервером только через REST API. |
+| Реляционная БД | PostgreSQL | Структурированные данные со строгими связями (устройства, пользователи). Требуются ACID-гарантии и внешние ключи. |
+| NoSQL | Redis | Key-value хранилище для кэширования последнего состояния устройства. Высокая скорость записи, схема не нужна, данные временные (TTL). |
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Технологии
 
-## Learn more
+- **Язык:** Elixir 1.17+
+- **Фреймворк:** Phoenix 1.7
+- **Реляционная БД:** PostgreSQL 14+
+- **NoSQL:** Redis 6+
+- **HTTP-сервер:** Bandit
+- **Клиент Redis:** Redix
+- **Мобильное приложение:** Kotlin, OkHttp (отдельный репозиторий)
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## Установка и запуск
+
+### Предварительные требования
+
+- Ubuntu 22.04+ (или другая Linux-система)
+- Erlang/OTP 26+
+- Elixir 1.17+
+- PostgreSQL 14+
+- Redis 6+
+
+## API
+
+### `GET /api/devices`
+
+Получить список всех устройств.
+
+**Ответ:**
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Test Device",
+      "status": "online",
+      "last_seen": "2026-06-09T14:01:37Z",
+      "device_type": "sensor",
+      "firmware_version": "1.0.0"
+    }
+  ]
+}
+```
+
+### `POST /api/devices/:id/telemetry`
+
+Отправить телеметрию от устройства. Используется мобильным приложением.
+
+**Тело запроса:**
+```json
+{
+  "temperature": 26.5,
+  "battery": 85
+}
+```
+
+**Ответ:**
+```json
+{
+  "status": "success",
+  "device_id": 1,
+  "last_seen": "2026-06-09T14:01:37Z"
+}
+```
+
+**Побочные эффекты:**
+- В PostgreSQL обновляется `status` и `last_seen` устройства.
+- В Redis сохраняется последняя телеметрия по ключу `device:<id>:telemetry` с TTL 1 час.
+
+## Мобильное приложение
+
+Исходный код Android-клиента находится в отдельном репозитории:
+**https://github.com/esisl/mobile_petelixir**
+
+Приложение отправляет тестовую телеметрию по нажатию кнопки и отображает статус ответа сервера.
