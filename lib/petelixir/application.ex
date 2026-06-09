@@ -12,6 +12,7 @@ defmodule Petelixir.Application do
       Petelixir.Repo,
       {DNSCluster, query: Application.get_env(:petelixir, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Petelixir.PubSub},
+      Petelixir.Redis,
       # Start the Finch HTTP client for sending emails
       {Finch, name: Petelixir.Finch},
       # Start a worker by calling: Petelixir.Worker.start_link(arg)

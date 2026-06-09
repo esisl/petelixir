@@ -36,6 +36,21 @@ defmodule Petelixir.Devices do
 
   """
   def get_device!(id), do: Repo.get!(Device, id)
+  @doc """
+  Gets a single device.
+
+  Returns nil if the Device does not exist.
+
+  ## Examples
+
+      iex> get_device(123)
+      %Device{}
+
+      iex> get_device(456)
+      nil
+
+  """
+  def get_device(id), do: Repo.get(Device, id)
 
   @doc """
   Creates a device.

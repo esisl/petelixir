@@ -13,7 +13,7 @@ defmodule Petelixir.DevicesFixtures do
       |> Enum.into(%{
         device_type: "some device_type",
         firmware_version: "some firmware_version",
-        last_seen: ~U[2026-06-08 07:40:00Z],
+        last_seen: ~U[2026-06-08 08:18:00Z],
         name: "some name",
         status: "some status"
       })

@@ -21,13 +21,13 @@ defmodule Petelixir.DevicesTest do
     end
 
     test "create_device/1 with valid data creates a device" do
-      valid_attrs = %{name: "some name", status: "some status", device_type: "some device_type", last_seen: ~U[2026-06-08 07:40:00Z], firmware_version: "some firmware_version"}
+      valid_attrs = %{name: "some name", status: "some status", device_type: "some device_type", last_seen: ~U[2026-06-08 08:18:00Z], firmware_version: "some firmware_version"}
 
       assert {:ok, %Device{} = device} = Devices.create_device(valid_attrs)
       assert device.name == "some name"
       assert device.status == "some status"
       assert device.device_type == "some device_type"
-      assert device.last_seen == ~U[2026-06-08 07:40:00Z]
+      assert device.last_seen == ~U[2026-06-08 08:18:00Z]
       assert device.firmware_version == "some firmware_version"
     end
 
@@ -37,13 +37,13 @@ defmodule Petelixir.DevicesTest do
 
     test "update_device/2 with valid data updates the device" do
       device = device_fixture()
-      update_attrs = %{name: "some updated name", status: "some updated status", device_type: "some updated device_type", last_seen: ~U[2026-06-09 07:40:00Z], firmware_version: "some updated firmware_version"}
+      update_attrs = %{name: "some updated name", status: "some updated status", device_type: "some updated device_type", last_seen: ~U[2026-06-09 08:18:00Z], firmware_version: "some updated firmware_version"}
 
       assert {:ok, %Device{} = device} = Devices.update_device(device, update_attrs)
       assert device.name == "some updated name"
       assert device.status == "some updated status"
       assert device.device_type == "some updated device_type"
-      assert device.last_seen == ~U[2026-06-09 07:40:00Z]
+      assert device.last_seen == ~U[2026-06-09 08:18:00Z]
       assert device.firmware_version == "some updated firmware_version"
     end
 

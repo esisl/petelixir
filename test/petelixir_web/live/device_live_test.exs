@@ -4,8 +4,8 @@ defmodule PetelixirWeb.DeviceLiveTest do
   import Phoenix.LiveViewTest
   import Petelixir.DevicesFixtures
 
-  @create_attrs %{name: "some name", status: "some status", device_type: "some device_type", last_seen: "2026-06-08T07:40:00Z", firmware_version: "some firmware_version"}
-  @update_attrs %{name: "some updated name", status: "some updated status", device_type: "some updated device_type", last_seen: "2026-06-09T07:40:00Z", firmware_version: "some updated firmware_version"}
+  @create_attrs %{name: "some name", status: "some status", device_type: "some device_type", last_seen: "2026-06-08T08:18:00Z", firmware_version: "some firmware_version"}
+  @update_attrs %{name: "some updated name", status: "some updated status", device_type: "some updated device_type", last_seen: "2026-06-09T08:18:00Z", firmware_version: "some updated firmware_version"}
   @invalid_attrs %{name: nil, status: nil, device_type: nil, last_seen: nil, firmware_version: nil}
 
   defp create_device(_) do

@@ -28,9 +28,12 @@ defmodule PetelixirWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", PetelixirWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", PetelixirWeb do
+    pipe_through :api
+
+    get "/devices", DeviceController, :index
+    post "/devices/:id/telemetry", TelemetryController, :update
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:petelixir, :dev_routes) do
